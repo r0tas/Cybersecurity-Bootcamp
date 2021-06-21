@@ -1,6 +1,6 @@
-<mxfile modified="2021-06-21T19:20:08.139Z" host="app.diagrams.net" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36" etag="4H7tCwqN-U1s-YlE9-y5" version="14.8.0" type="github">
+<mxfile modified="2021-06-21T19:21:50.053Z" host="app.diagrams.net" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36" etag="fZHZEsHeD7geYGZ-eQE_" version="14.8.0" type="github">
   <diagram id="WI9T0HZ2pTsCkuznbFz-" name="Page-1">
-    <mxGraphModel dx="1580" dy="858" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="773" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -64,7 +64,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="L0qkesaWFi-WSEe6DB-z-37" value="Load Balancer&lt;br&gt;13.90.94.34" style="verticalLabelPosition=top;html=1;verticalAlign=bottom;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.azure_load_balancer;labelPosition=center;" vertex="1" parent="1">
-          <mxGeometry x="230" y="418.5" width="50" height="35" as="geometry" />
+          <mxGeometry x="223.5" y="426" width="50" height="35" as="geometry" />
         </mxCell>
         <mxCell id="L0qkesaWFi-WSEe6DB-z-39" value="Security Group" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Network_Security_Groups_Classic.svg;" vertex="1" parent="1">
           <mxGeometry x="230" y="650" width="37" height="50" as="geometry" />
