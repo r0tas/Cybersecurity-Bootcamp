@@ -28,66 +28,127 @@ Integrating an ELK server allows users to easily monitor the vulnerable VMs for 
 
 The configuration details of each machine may be found below.
 
-| Name     | Function | IP Address | Operating System |
-|----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.4   | Linux            |
-| Web-1    | Device   | 10.0.0.7   | Linux            |
-| Web-2    | Device   | 10.0.0.8   | Linux            |
-| Web-3    | Device   | 10.0.0.9   | Linux            |
-| ELKServer| ELKServer| 10.1.0.4   | Linux            |
+| Name       | Function   | IP Address | Operating System |
+|------------|------------|------------|------------------|
+| Jump Box   | Gateway    | 10.0.0.4   | Linux            |
+| Web-1 VM   | Web Server | 10.0.0.7   | Linux            |
+| Web-2 VM   | Web Server | 10.0.0.8   | Linux            |
+| Web-3 VM   | Web Server | 10.0.0.9   | Linux            |
+| ELK Server | ELK Server | 10.1.0.9   | Linux            |
 
 ### Access Policies
 
 The machines on the internal network are not exposed to the public Internet. 
 
 Only the Jump Box Provisioner machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- 2603:6011:2f07:478c:5493:ce18:72d6:4da1
+
+2603:6011:2f07:478c:5493:ce18:72d6:4da1 (Local Machine)
 
 Machines within the network can only be accessed by SSH from the JumpBox Provisioner.
 
 A summary of the access policies in place can be found in the table below.
 
-| Name     | Publicly Accessible | Allowed IP Addresses |
-|----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.1 10.0.0.2    |
-|          |                     |                      |
-|          |                     |                      |
+| Name       | Publicly Accessible  | Allowed IP Addresses     |
+|------------|----------------------|--------------------------|
+| Jump Box   | Yes w/ SSH and white | Local Machine IP Address |                |            | listed IP address    |                          |
+| Web-1 VM   | No                   | Jump Box IP 10.0.0.4     |
+| Web-2 VM   | No                   | Jump Box IP 10.0.0.4     |
+| Web-3 VM   | No                   | Jump Box IP 10.0.0.4     |
+| ELK Server | No                   | Jump Box IP 10.0.0.4     |
 
 ### Elk Configuration
 
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because manual configuration is often susceptible to human error. 
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because manual configuration is often susceptible to human error. Ansible greatly simplifies this process and allows for the efficient configuration of multiple machines, reducing time and costs.
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
+- Designates hosts and users
+- Installs Docker
+- Installs pip3
+- Installs Docker Python module
+- Allocates more memory to the machines
+- Downloads and launches a Docker ELK container with images and published ports
+- Boots Docker
+
+![ELK Playbook](https://github.com/r0tas/Cybersecurity-Bootcamp/blob/main/Images/ELK_YML_Playbook.JPG)
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
+![List ELK Containers](https://github.com/r0tas/Cybersecurity-Bootcamp/blob/main/Images/ELK_docker_ps.JPG)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+- Web-1 VM 10.0.0.7
+- Web-2 VM 10.0.0.8
+- Web-3 VM 10.0.0.9
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+- Filebeat
+- Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+- Filebeat collects log events, monitors log files or locations, and forwards them to Elasticsearch or Logstash for indexing. Metricbeat will systematically collect metrics from the operating system and servers running and forward them to Elasticsearch or Logstash. Metricbeat monitors services such as Apache, MySQL, or Nginx, as well as others.
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
 
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
+- Copy the installation playbook file to a .yml file in the /etc/ansible directory inside the ansible container.
 
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+- Update the hosts file in the ansible directory to include the correct hosts and groups; don't forget to add "ansible_python_interpreter=/usr/bin/python3" after the IP address 
+
+![Ansible hosts file](https://github.com/r0tas/Cybersecurity-Bootcamp/blob/main/Images/Ansible_Hosts.JPG)
+
+- Run the playbook, and navigate to http://[YourELKServerIP]:5601/app/kibana (in this case, the ELK server IP is 13.64.101.168, so the full link would be http://13.64.101.168:5601/app/kibana) to check that the installation worked as expected.
+
+
+### Commands
+
+To generate an SSH key: 
+
+- $ ssh-keygen 
+- If generating a key inside of an Ansible container for a webserver or other machine inside of the network, do not set a passphrase in order to enable automation of configuration 
+
+To SSH into the JumpBox Provisioner VM from local machine: 
+
+- $ ssh -i (full path to the private ssh key used when setting up the VMs in the Azure portal) username@ip_of_jumpbox 
+  - Enter passphrase for ssh key when prompted 
+  - This will take the user into the JumpBox
+  - Example command: ssh -i ~/.ssh/id_rsa azadmin@52.152.235.68 
+
+To install Docker in the JumpBox: 
+
+- $ sudo apt install docker.io 
+
+To pull Ansible image: 
+
+- $ sudo docker pull cyberxsecurity/ansible 
+
+To see what images are pulled: 
+
+- $ sudo docker images 
+
+To create a container: 
+
+- $ sudo docker run -ti --name (name of container) (image) bash 
+  - Can use any unique name, and include an image that has already been pulled, such as cyberxsecurity/ansible 
+
+To start a container: 
+
+- $ sudo docker start (name of container) 
+  - Only start a container once if it is not running, otherwise it will create a new container each time it is started 
+
+To get into a container: 
+
+- $ sudo docker exec -ti (name of container) bash 
+  - There are other commands that will do the same thing 
+
+To see what Docker containers are available: 
+
+- $ sudo docker container ls -a 
+  - This will list all the containers with their Container ID, Image, Command, Creation Date, Status, Ports, and Names 
+
+To run an Ansible playbook ./yml file: 
+
+- $ ansible-playbook elk.yml 
+  - Use for any Ansible playbook file 
