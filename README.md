@@ -33,7 +33,6 @@ The configuration details of each machine may be found below.
 | Jump Box   | Gateway    | 10.0.0.4   | Linux            |
 | Web-1 VM   | Web Server | 10.0.0.7   | Linux            |
 | Web-2 VM   | Web Server | 10.0.0.8   | Linux            |
-| Web-3 VM   | Web Server | 10.0.0.9   | Linux            |
 | ELK Server | ELK Server | 10.1.0.9   | Linux            |
 
 ### Access Policies
@@ -53,7 +52,6 @@ A summary of the access policies in place can be found in the table below.
 | Jump Box   | Yes w/ SSH and white | Local Machine IP Address |                |            | listed IP address    |                          |
 | Web-1 VM   | No                   | Jump Box IP 10.0.0.4     |
 | Web-2 VM   | No                   | Jump Box IP 10.0.0.4     |
-| Web-3 VM   | No                   | Jump Box IP 10.0.0.4     |
 | ELK Server | No                   | Jump Box IP 10.0.0.4     |
 
 ### Elk Configuration
